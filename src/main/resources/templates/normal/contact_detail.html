@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="card mr-3 ml-3" th:if="${contact}">
+			<div class="card-body">
+				<div class="container text-center">
+					<img style="height: 100px; width: 100px; border-radius: 50%;"
+						class="my_profile_picture"
+						th:src="@{'/img/contact/'+${contact.image}}" alt="profile pic" />
+					<h3 class="mt-2">
+						<span th:text="${contact.name}"></span> ( <span
+							th:text="${contact.secondName}"></span> )
+					</h3>
+					<div class="desc">
+						<th:block th:utext="${contact.description}"></th:block>
+					</div>
+					<table class="table mt-2">
+						<thead>
+							<tr>
+								<th scope="col">#ID</th>
+								<th scope="col" th:text="${contact.cId}"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">Email</th>
+								<td th:text="${contact.email}"></td>
+							</tr>
+							<tr>
+								<th scope="row">Phone</th>
+								<td th:text="${contact.phone}"></td>
+							</tr>
+							<tr>
+								<th scope="row">Work</th>
+								<td th:text="${contact.work}"></td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="container text-center">
+						<form th:action="@{'/user/update-contact/'+${contact.cId}}"
+							method="post" class="d-inline">
+							<button type="submit" class="btn btn-sm btn-warning">Update</button>
+						</form>
+						<a href="#" th:onclick="|deleteContact(${contact.cId})|"
+							class="btn btn-sm btn-danger">Delete</a>
+					</div>
+				</div>
+			</div>
+		</div>
+			<h3 th:unless="${contact}"
+				class="alert alert-warning text-center">You don't have
+				permission to see this contact...</h3>
+	</section>
+</body>
+</html>
